@@ -1,0 +1,108 @@
+# =========================
+# Python
+# =========================
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Python build / packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Testing / coverage
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+
+# =========================
+# C++
+# =========================
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Visual Studio build output
+Debug/
+Release/
+x64/
+x86/
+
+# C++ compiled objects / binaries
+*.obj
+*.o
+*.exe
+*.dll
+*.lib
+*.pdb
+*.ilk
+
+# CMake
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+install_manifest.txt
+CTestTestfile.cmake
+Testing/
+cmake-build-*/
+
+
+# =========================
+# Data / generated files
+# =========================
+
+# Temporary files
+*.tmp
+*.temp
+
+# Logs
+*.log
+
+
+# =========================
+# Operating system
+# =========================
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# macOS
+.DS_Store
+
+
+# =========================
+# IDEs / editors
+# =========================
+
+.idea/
+.vscode/
+
+
+# NuGet packages
+**/packages/
