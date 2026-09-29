@@ -166,8 +166,8 @@ unsigned long long time_program_started;
 
 // Lander state - the visualization routines use velocity_from_positions, so not sensitive to 
 // any errors in the velocity update in numerical_dynamics
-vector3d position, orientation, velocity, velocity_from_positions, last_position;
-double climb_speed, ground_speed, altitude, throttle, fuel;
+vector3d position, orientation, velocity, acceleration, velocity_from_positions, last_position;
+double climb_speed, ground_speed, altitude, throttle, fuel, LANDER_MASS;
 bool stabilized_attitude, autopilot_enabled, parachute_lost;
 parachute_status_t parachute_status;
 int stabilized_attitude_angle;
@@ -186,10 +186,10 @@ GLfloat straight_on[] = { 0.0, 0.0, 1.0, 0.0 };
 #else // extern declarations of those global variables used in lander.cpp
 
 extern bool stabilized_attitude, autopilot_enabled;
-extern double delta_t, simulation_time, throttle, fuel;
+extern double delta_t, simulation_time, throttle, fuel, LANDER_MASS;
 extern unsigned short scenario;
 extern string scenario_description[];
-extern vector3d position, orientation, velocity;
+extern vector3d position, orientation, velocity, acceleration;
 extern parachute_status_t parachute_status;
 extern int stabilized_attitude_angle;
 

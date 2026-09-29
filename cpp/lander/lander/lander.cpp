@@ -25,6 +25,17 @@ void numerical_dynamics (void)
   // lander's pose. The time step is delta_t (global variable).
 {
   // INSERT YOUR CODE HERE
+  // Euler Integration Method
+    fuel = FUEL_CAPACITY;
+    LANDER_MASS = UNLOADED_LANDER_MASS + fuel * FUEL_DENSITY;
+
+    position = position + delta_t * velocity;
+    acceleration = (- GRAVITY * MARS_MASS * (1 / pow(position.abs(), 3)) * position) - 
+        0.5 * atmospheric_density(position) * DRAG_COEF_LANDER * M_PI* pow(LANDER_SIZE, 2) * velocity.abs() * velocity * 1/LANDER_MASS +
+        thrust_wrt_world() * 1/LANDER_MASS;
+    velocity = velocity + delta_t * acceleration;
+    
+
 
   // Here we can apply an autopilot to adjust the thrust, parachute and attitude
   if (autopilot_enabled) autopilot();
