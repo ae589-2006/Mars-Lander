@@ -17,7 +17,24 @@
 void autopilot (void)
   // Autopilot to adjust the engine throttle, parachute and attitude control
 {
-  // INSERT YOUR CODE HERE
+    // INSERT YOUR CODE HERE
+    LANDER_MASS = UNLOADED_LANDER_MASS + fuel * FUEL_DENSITY;
+    altitude = position1.abs() - MARS_RADIUS;
+
+    double Pout = 0.1 * -(0.5 + 0.001 * altitude + velocity * position1.norm());
+    double Delta =
+        LANDER_MASS * GRAVITY * MARS_MASS
+        / (pow(position1.abs(), 2) * MAX_THRUST);
+
+    if (Pout <= -Delta) {
+        throttle = 0;
+
+    } else if (Pout < 1 - Delta) {
+        throttle = Delta + Pout;
+
+    } else {
+        throttle = 1;
+    }
 }
 
 void numerical_dynamics(void)
@@ -34,6 +51,10 @@ void numerical_dynamics(void)
     }
 
 
+    if (autopilot_enabled == true) {
+        autopilot();
+    }
+
 
   /*
   // Euler Integration Method
@@ -48,7 +69,7 @@ void numerical_dynamics(void)
     */
 
     // Verlet Integration Method
-    fuel = FUEL_CAPACITY;
+    fuel = fuel - (thrust_wrt_world().abs()/ MAX_THRUST) * FUEL_RATE_AT_MAX_THRUST;
     LANDER_MASS = UNLOADED_LANDER_MASS + fuel * FUEL_DENSITY;
     acceleration = (-GRAVITY * MARS_MASS * (1 / pow(position.abs(), 3)) * position1) -
         drag_accel +
@@ -174,5 +195,5 @@ void initialize_simulation (void)
   }
 
   position1 = position + delta_t * velocity;
-
+  fuel = FUEL_CAPACITY;
 }
