@@ -13,6 +13,7 @@
 // ahg@eng.cam.ac.uk and gc121@eng.cam.ac.uk.
 
 #include "lander.h"
+#include <iostream>
 
 void autopilot (void)
   // Autopilot to adjust the engine throttle, parachute and attitude control
@@ -21,7 +22,7 @@ void autopilot (void)
     LANDER_MASS = UNLOADED_LANDER_MASS + fuel * FUEL_DENSITY;
     altitude = position1.abs() - MARS_RADIUS;
 
-    double Pout = 0.1 * -(0.5 + 0.001 * altitude + velocity * position1.norm());
+    double Pout = 0.1 * -(0.5 + 0.03 * altitude + velocity * position1.norm());
     double Delta =
         LANDER_MASS * GRAVITY * MARS_MASS
         / (pow(position1.abs(), 2) * MAX_THRUST);
@@ -35,7 +36,30 @@ void autopilot (void)
     } else {
         throttle = 1;
     }
-}
+
+    /*
+    using namespace std;
+
+    ofstream fout;
+    fout.open("targetdescent0_03.txt", ios::app);
+    if (fout) {
+        fout << -(0.5 + 0.02 * altitude) << endl;
+    }
+
+    ofstream fout1;
+    fout1.open("actualdescent0_03.txt", ios::app);
+    if (fout1) {
+        fout1 << -(velocity * position1.norm()) << endl;
+    }
+
+    ofstream fout2;
+    fout2.open("altitude0_03.txt", ios::app);
+    if (fout2) {
+        fout2 << altitude << endl;
+    }
+    */
+        
+}   
 
 void numerical_dynamics(void)
 // This is the function that performs the numerical integration to update the

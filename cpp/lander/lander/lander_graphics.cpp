@@ -743,10 +743,10 @@ void draw_instrument_window (void)
   draw_control_bar(view_width+GAP+240, INSTRUMENT_HEIGHT-170, throttle, 1.0, 0.0, 0.0, s.str());
 
   // Draw fuel bar
-  s.str(""); s << "Fuel " << fixed << fuel*FUEL_CAPACITY << " litres";
-  if (fuel > 0.5) draw_control_bar(view_width+GAP+240, INSTRUMENT_HEIGHT-242, fuel, 0.0, 1.0, 0.0, s.str());
-  else if (fuel > 0.2) draw_control_bar(view_width+GAP+240, INSTRUMENT_HEIGHT-242, fuel, 1.0, 0.5, 0.0, s.str());
-  else draw_control_bar(view_width+GAP+240, INSTRUMENT_HEIGHT-242, fuel, 1.0, 0.0, 0.0, s.str());
+  s.str(""); s << "Fuel " << fixed << fuel << " litres";
+  if (fuel/100 > 0.5) draw_control_bar(view_width+GAP+240, INSTRUMENT_HEIGHT-242, fuel/100, 0.0, 1.0, 0.0, s.str());
+  else if (fuel/100 > 0.2) draw_control_bar(view_width+GAP+240, INSTRUMENT_HEIGHT-242, fuel/100, 1.0, 0.5, 0.0, s.str());
+  else draw_control_bar(view_width+GAP+240, INSTRUMENT_HEIGHT-242, fuel/100, 1.0, 0.0, 0.0, s.str());
 
   // Display simulation status
   if (landed) glColor3f(1.0, 1.0, 0.0);
