@@ -20,11 +20,22 @@ void autopilot (void)
   // INSERT YOUR CODE HERE
 }
 
-void numerical_dynamics (void)
-  // This is the function that performs the numerical integration to update the
-  // lander's pose. The time step is delta_t (global variable).
+void numerical_dynamics(void)
+// This is the function that performs the numerical integration to update the
+// lander's pose. The time step is delta_t (global variable).
 {
-  // INSERT YOUR CODE HERE
+    // INSERT YOUR CODE HERE
+    if (parachute_status == DEPLOYED) {
+        drag_accel = 0.5 * atmospheric_density(position1) * velocity.abs() * velocity * 1 / LANDER_MASS * 
+            (DRAG_COEF_LANDER * M_PI * pow(LANDER_SIZE, 2) + DRAG_COEF_CHUTE + 5 * 2 * LANDER_SIZE) ;
+
+    } else {
+        drag_accel = 0.5 * atmospheric_density(position1) * DRAG_COEF_LANDER * M_PI * pow(LANDER_SIZE, 2) * velocity.abs() * velocity * 1 / LANDER_MASS;
+    }
+
+
+
+  /*
   // Euler Integration Method
     fuel = FUEL_CAPACITY;
     LANDER_MASS = UNLOADED_LANDER_MASS + fuel * FUEL_DENSITY;
@@ -34,7 +45,21 @@ void numerical_dynamics (void)
         0.5 * atmospheric_density(position) * DRAG_COEF_LANDER * M_PI* pow(LANDER_SIZE, 2) * velocity.abs() * velocity * 1/LANDER_MASS +
         thrust_wrt_world() * 1/LANDER_MASS;
     velocity = velocity + delta_t * acceleration;
-    
+    */
+
+    // Verlet Integration Method
+    fuel = FUEL_CAPACITY;
+    LANDER_MASS = UNLOADED_LANDER_MASS + fuel * FUEL_DENSITY;
+    acceleration = (-GRAVITY * MARS_MASS * (1 / pow(position.abs(), 3)) * position1) -
+        drag_accel +
+        thrust_wrt_world() * 1 / LANDER_MASS;
+    position2 = 2 * position1 - position + acceleration*pow(delta_t, 2);
+    velocity = (position2 - position1) * pow(delta_t, -1);
+
+    position = position1;
+    position1 = position2;
+
+
 
 
   // Here we can apply an autopilot to adjust the thrust, parachute and attitude
@@ -147,4 +172,7 @@ void initialize_simulation (void)
     break;
 
   }
+
+  position1 = position + delta_t * velocity;
+
 }
